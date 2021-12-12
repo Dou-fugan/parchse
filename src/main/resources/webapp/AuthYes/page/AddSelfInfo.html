@@ -1,0 +1,137 @@
+<div class="layuimini-container layuimini-page-anim">
+    <div style="display:flex;align-items:center;justify-content:center;height: 100%" >
+        <div class="layuimini-main" style="width: 700px">
+            <div>
+                <div style="display:flex;align-items:center;justify-content:center;height: 100%">
+                    <span style="display:inline-block;line-height: 56px;font-size: xx-large;">企业信息</span>
+                    <svg style="display: inline-block;vertical-align: top" xmlns="http://www.w3.org/2000/svg" width="56" height="56" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                    </svg>
+                </div>
+                <hr>
+                <div style="display:flex;align-items:center;justify-content:center;height: 100%">
+                    <div id="form1" style="width: 400px">
+                        <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="150px" class="demo-ruleForm">
+                            <el-form-item label="社会统一信用代码" prop="usccode">
+                                <el-input type="text" v-model="ruleForm.usccode" :disabled="true" autocomplete="off"></el-input>
+                            </el-form-item>
+                            <el-form-item label="企业名称" prop="manufacturer_name">
+                                <el-input type="text" v-model="ruleForm.manufacturer_name" autocomplete="off"></el-input>
+                            </el-form-item>
+                            <el-form-item label="企业地址" prop="address">
+                                <el-input type="text" v-model="ruleForm.address" autocomplete="off"></el-input>
+                            </el-form-item>
+                            <el-form-item label="代理人" prop="agent">
+                                <el-input v-model="ruleForm.agent"></el-input>
+                            </el-form-item>
+                            <el-form-item label="电话" prop="telephone_number">
+                                <el-input v-model="ruleForm.telephone_number"></el-input>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+                                <el-button @click="resetForm('ruleForm')">重置</el-button>
+                            </el-form-item>
+                        </el-form>
+                    </div>
+                </div>
+            </div>
+            <script>
+                var $={};
+                var layer={};
+                layui.use(['jquery', 'layer'], function () {
+                    $ = layui.jquery,
+                    layer = layui.layer;
+                })
+
+                var form1 = {
+                    data() {
+                        var checkName = (rule, value, callback) => {
+                            if (!value) {
+                                return callback(new Error('名称不能为空'));
+                            }else {
+                                callback();
+                            }
+                        };
+                        var validateTele = (rule, value, callback) => {
+                            if (!value) {
+                                callback(new Error('手机号不能为空'));
+                            } else {
+                                if (this.ruleForm.telephone_number.length !== 11) {
+                                    callback(new Error('手机号必须为11位'));
+                                }
+                                callback();
+                            }
+                        };
+
+                        return {
+                            ruleForm: {
+                                usccode: '',
+                                manufacturer_name: '',
+                                address: '',
+                                agent:'',
+                                telephone_number:''
+                            },
+                            rules: {
+                                manufacturer_name: [
+                                    { validator: checkName, trigger: 'blur' }
+                                ],
+                                telephone_number: [
+                                    { validator: validateTele, trigger: 'blur' }
+                                ]
+                            }
+                        };
+                    },
+                    methods: {
+                        submitForm(formName) {
+                            this.$refs[formName].validate((valid) => {
+                                if (valid) {
+                                    $.ajax({
+                                        url:"/AuthYes/updateProfile",
+                                        type:'post',
+                                        async: false,
+                                        contentType: "application/json;charset=utf-8",
+                                        data:JSON.stringify(this.ruleForm),
+                                        success:function(data){
+                                            if(data.message==="更新成功"){
+                                                vueInstance2.open2(data.message)
+                                            }
+                                        },
+                                        //暂时未定义，因为没想到怎么更新出错
+                                        error:function (data) {
+                                            debugger;
+                                            vueInstance2.open4(JSON.parse(data.responseText).message)
+                                        }
+                                    })
+                                } else {
+                                    console.log('error submit!!');
+                                    return false;
+                                }
+                            });
+                        },
+                        resetForm(formName) {
+                            var temp=vueInstance1.ruleForm.usccode;
+                            this.$refs[formName].resetFields();
+                            vueInstance1.ruleForm.usccode=temp;
+                        }
+                    },
+                    mounted:()=>{
+                        //数据回显
+                        $.get("/AuthYes/queryProfile",(data)=>{
+                            vueInstance1.ruleForm.usccode=data.usccode;
+                            vueInstance1.ruleForm.manufacturer_name=data.manufacturer_name;
+                            vueInstance1.ruleForm.agent=data.agent;
+                            vueInstance1.ruleForm.address=data.address;
+                            vueInstance1.ruleForm.telephone_number=data.telephone_number;
+                        })
+                    }
+                }
+                var f1=Vue.extend(form1);
+                var vueInstance1=new f1().$mount('#form1')
+            </script>
+            <script>
+
+            </script>
+        </div>
+    </div>
+</div>

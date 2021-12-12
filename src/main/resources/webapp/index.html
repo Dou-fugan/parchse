@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <title>医院药品系统</title>
+    <script src="../AuthNo/lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+    <script src="../AuthNo/js/lay-config.js?v=2.0.0" charset="utf-8"></script>
+    <link rel="stylesheet" href="../AuthNo/lib/layui-v2.6.3/css/layui.css" media="all">
+</head>
+<body class="use-flexbox" style="height: 100%">
+<div style="height: 300px;">
+    <div id="background" class="layui-card" style="position: relative;top: 0px">
+        <div id="theHead" class="layui-card-header use-flexbox" style="height: 100px;">
+            <div>
+                药品采购系统登录统一身份登录入口
+            </div>
+        </div>
+        <div id="maincontainer" class="layui-card-body">
+            <div>
+                <button id="id1" class="btn layui-btn" onclick="woc('/AuthNo/login2.html')">
+                    药品商登录
+                </button>
+                <button id="id2" class="btn layui-btn" onclick="woc('/AuthNo/register.html')">
+                    药品商注册
+                </button>
+                <button id="id3" class="btn layui-btn" onclick="woc('/AuthNo/login1.html')">
+                    采购科登录
+                </button>
+            </div>
+            <!--        <input shapi="niupi" value="我草黄志国">-->
+        </div>
+    </div>
+
+</div>
+<style>
+    .use-flexbox{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+    }
+    body{
+        display: grid;
+        background-color: #F6F6F6;
+        grid-template-columns: 1fr 600px 1fr;
+        grid-template-rows: 100px 1fr;
+    }
+    #background{
+        grid-column-start: 2;
+        grid-column-end: 3;
+        grid-row-start: 2;
+    }
+    #theHead{
+        text-align: center;
+        font-family: '微软雅黑','楷体';
+        font-size: 35px;
+    }
+    #maincontainer{
+        text-align: center;
+    }
+    .btn{
+        position: relative;
+        margin: 20px;
+    }
+</style>
+<script>
+    function woc(url){
+        window.location=url;
+    }
+</script>
+</body>
+</html>

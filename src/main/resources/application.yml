@@ -1,0 +1,35 @@
+server:
+  port: 8083
+  servlet:
+    session:
+      timeout: 72000s
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB 
+      max-request-size: 1024MB 
+  application:
+    name: pharmacy-erp-system
+  resources:
+    static-locations: classpath:/,file:D:\imgs\
+  datasource:
+    url: jdbc:mysql://localhost:3308/parts_procurement_system?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: vnv0123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+  http:
+    encoding:
+      charset: utf-8
+      enabled: true
+

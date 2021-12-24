@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "shiro.userNativeSessionManager",
+      "type": "java.lang.String",
+      "description": "Description for shiro.userNativeSessionManager."
+  }
+] }

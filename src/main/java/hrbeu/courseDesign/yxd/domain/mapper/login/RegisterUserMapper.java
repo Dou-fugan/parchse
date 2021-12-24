@@ -29,4 +29,6 @@ public interface RegisterUserMapper extends BaseMapper<SystemShiroUser> {
 
     @Select("SELECT COUNT(*) FROM system_shiro_user WHERE username=#{username}")
     int selectSystemShiroUser(String username);
+    @Select("SELECT usccode FROM system_shiro_user WHERE id= #{user_id};")
+    String getUsccode(String user_id);
 }

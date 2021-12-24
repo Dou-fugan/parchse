@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="error">
+  <Properties>
+    <Property name="LOG_PATTERN">
+      %d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${hostName} --- [%15.15t] %-40.40c{1.} : %m%n%ex
+    </Property>
+  </Properties>
+
+  <Appenders>
+    <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+      <PatternLayout pattern="${LOG_PATTERN}"/>
+    </Console>
+
+    <JDBC name="UserBehaviorAppender" tableName="logging">
+      <ConnectionFactory class="hrbeu.courseDesign.yxd.infrastructure.config.ConnectionFactoryConfig" method="getDatabaseConnection" />
+      <Column name="user_id" pattern="%X{userId}" />
+      <Column name="time" pattern="%d{yyyy-MM-dd hh:mm:ss}"/>
+      <Column name="actions" pattern="%X{usrAction}"/>
+      <Column name="time_consuming" pattern="%X{timeConsuming}"/>
+<!--      <Column name="throwable" pattern="%ex{full}" isUnicode="false"/>-->
+    </JDBC>
+  </Appenders>
+  <Loggers>
+    <AsyncLogger name="UserBehaviorLogger" level="info">
+      <AppenderRef ref="UserBehaviorAppender" />
+    </AsyncLogger>
+
+    <Root level="info">
+      <AppenderRef ref="ConsoleAppender" />
+    </Root>
+  </Loggers> 
+</Configuration>

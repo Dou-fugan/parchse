@@ -17,4 +17,6 @@ public interface ManufacturerMapper extends BaseMapper<Manufacturer> {
 
     @Select("SELECT usccode FROM `system_shiro_user` WHERE id = #{id};")
     String selectUsccode(int id);
+
+
 }

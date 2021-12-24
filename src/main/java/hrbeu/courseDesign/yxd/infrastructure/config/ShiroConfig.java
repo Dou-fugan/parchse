@@ -84,6 +84,7 @@ public class ShiroConfig {
         //注册 数据库中所有的权限 及其对应url
         List<Permission> allPermission = permissionRepository.findAll();//数据库中查询所有权限
         for (Permission p : allPermission) {
+            System.out.println(p.getUrl());
             filterMap.put(p.getUrl(), "perms[" + p.getName() + "]");    //拦截器中注册所有的权限
         }
 //        filterMap.put("/open/api/login1", "login1");

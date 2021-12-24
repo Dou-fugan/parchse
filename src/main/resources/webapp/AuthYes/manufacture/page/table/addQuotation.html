@@ -1,0 +1,59 @@
+<div class="layuimini-main">
+    <div class="layui-form layuimini-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label required">零件编号</label>
+            <div class="layui-input-block">
+                <input type="text" name="partId" lay-verify="required" lay-reqtext="零件名不能为空" placeholder="请输入零件编号" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">项目编号</label>
+            <div class="layui-input-block">
+                <input type="text" name="projectId" lay-verify="required" lay-reqtext="项目不能为空" placeholder="请输入项目编号" value="" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['form', 'table'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            table = layui.table,
+            $ = layui.$;
+
+        /**
+         * 初始化表单，要加上，不然刷新部分组件可能会不加载
+         */
+        form.render();
+
+        // 当前弹出层，防止ID被覆盖
+        var parentIndex = layer.index;
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            console.log(data);
+            debugger
+            layui.jquery.ajax({
+                url:"/AuthYes/createQuotation",
+                method:'post',
+                contentType:"application/json; charset=utf-8",
+                data:JSON.stringify(data.field),
+                success:(data)=>{
+                    layer.msg(data.message);
+                },
+                error:()=>{
+                    layer.msg(data.message);
+                }
+            })
+            return false;
+        });
+
+    });
+</script>

@@ -8,7 +8,10 @@ import hrbeu.courseDesign.yxd.domain.shiro.service.UserLoginApiService;
 import hrbeu.courseDesign.yxd.domain.shiro.vo.Resp;
 import hrbeu.courseDesign.yxd.infrastructure.utils.Encrypt;
 import hrbeu.courseDesign.yxd.infrastructure.utils.VerifyCodeUtils;
+import org.apache.logging.log4j.ThreadContext;
 import org.apache.shiro.SecurityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.OutputStream;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Map;
 
 @RestController
@@ -33,6 +39,7 @@ public class LoginApiFacade {
     private UserLoginApiService userLoginApiService;
     @Resource
     private UserRepository userRepository;
+
     /**
      * 登陆 API
      *
